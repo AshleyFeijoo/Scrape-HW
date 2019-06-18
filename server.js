@@ -1,6 +1,8 @@
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var exphbs = require("express-handlebars");
+
 
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
@@ -28,73 +30,34 @@ app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 
 
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/scrapeHwDb", { useNewUrlParser: true });
-
+var result = {};
 // Routes
-
-// A GET route for scraping the echoJS website
-// app.get("/scrape", function(req, res) {
-//   axios.get("https://www.clickhole.com/").then(function(response) {
-//     var $ = cheerio.load(response.data);
-//     $("article").each(function(i, element) {
-//       var result = {};
-
-//       result.title = $(element).find("h1").text();
-//         // .children("a")
-//         // .text();
-//       var link = $(element).find("h1").parent("a").attr("href");
-
-//       axios.get(link).then(function(response) {
-//         var $ = cheerio.load(response.data);
-//         $("article").each(function(i, element) {
-//           img = $(element).find("img").attr("src");
-//             // console.group(image);
-//         })
-//         console.log(img)
-//         const result ={
-//           title: title,
-//           link: link,
-//           img: img
-//         };
-//         db.Article.create(result)
-//         .then(function(dbArticle) {
-//           // View the added result in the console
-//           console.log(dbArticle);
-
-//         })
-//         .catch(function(err) {
-//           // If an error occurred, log it
-//           console.log("error is " + err);
-//         });
-//           db.scrapedData.save( results );
-//           res.send(results);
-//       });
-
-//     });
-//     res.send("Scrape Complete");
-//   });
-//     res.redirect('/');
-
-// });
 
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
   axios.get("https://www.clickhole.com/").then(function(response) {
     var $ = cheerio.load(response.data);
-    var results = [];
+
+    console.log($);
     $("article").each(function(i, element) {
+    
       var title = $(element).find("h1").text();
       var link = $(element).find("h1").parent("a").attr("href");
       var img = '';
       // console.log(link);
       axios.get(link).then(function(response) {
         var $ = cheerio.load(response.data);
+
         $("article").each(function(i, element) {
           img = $(element).find("img").attr("src");
             // console.group(image);
         })
-        console.log(img);
         const result ={
           title: title,
           link: link,
@@ -110,17 +73,18 @@ app.get("/scrape", function(req, res) {
           // If an error occurred, log it
           console.log("error is " + err);
         });
-      db.scrapedData.save( results );
-      res.send(results);
+      // db.scrapedData.save( results );
+
       });
+
     });
   
     // Send a message to the client
-    res.json("Scrape Complete");
+    res.redirect('/');
     
   });
   // res.redirect('/');
-
+      // res.send(result);
 });
 
 
@@ -129,6 +93,7 @@ app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
   db.Article.find({})
     .then(function(dbArticle) {
+      console.log(dbArticle._id);
       // If we were able to successfully find Articles, send them back to the client
       res.json(dbArticle);
     })
@@ -138,6 +103,21 @@ app.get("/articles", function(req, res) {
     });
 });
 
+
+app.get("/notes/:id", function(req, res){
+console.log(req.params.articleId)
+  db.Note.find({ _id: req.params.id })
+    .then(function(dbNote) {
+      // If we were able to successfully find Articles, send them back to the client
+      res.json(dbNote);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+
+});
+
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
@@ -145,7 +125,9 @@ app.get("/articles/:id", function(req, res) {
     // ..and populate all of the notes associated with it
     .populate("note")
     .then(function(dbArticle) {
+      // db.Note.findOne(articleId: )
       // If we were able to successfully find an Article with the given id, send it back to the client
+      console.log(dbArticle.note._id);
       res.json(dbArticle);
     })
     .catch(function(err) {
@@ -159,12 +141,17 @@ app.post("/articles/:id", function(req, res) {
   // Create a new note and pass the req.body to the entry
   db.Note.create(req.body)
     .then(function(dbNote) {
+      console.log(req.params);
+      // req.params
       // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
+      // db.Article.insertMany({ _id: req.params.id }, { note: dbNote._id }, { new: true });
       // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+      return db.Article.update({ _id: req.params.id }, { note: dbNote._id }, { new: true }, {multi: true});
+      console.log(dbNote)
     })
     .then(function(dbArticle) {
+
       // If we were able to successfully update an Article, send it back to the client
       res.json(dbArticle);
       console.log(dbArticle)

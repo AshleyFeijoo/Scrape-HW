@@ -10,13 +10,12 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald:300" rel="stylesheet">
 
     <link rel="stylesheet" href="./css/all.min.css">
-
     <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
-    <link href="/css/mdb.min.css" rel="stylesheet">
+    <link href="./css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
-    <link href="/css/style.css">
+    <link href="./css/style.css">
 </head>
 <!--Main Navigation-->
 
@@ -60,66 +59,120 @@
   
     <!-- Grid row -->
     <div class="row d-flex justify-content-center">
-  
-      <!-- Grid column
-      <div class="col-xl-7 pb-2">
-  
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga aliquid dolorem ea distinctio exercitationem delectus qui, quas eum architecto, amet quasi accusantium, fugit consequatur ducimus obcaecati numquam molestias hic itaque accusantium doloremque laudantium, totam rem aperiam.</p>
-  
-      </div> -->
-      <!-- Grid column -->
-  
     </div>
-    <!-- Grid row -->
   
     <hr class="pb-1">
   
-    <button class="btn blue-gradient btn-rounded" id="scrapeBtn">Scrape Articles<i class="far fa-gem ml-1"></i></button>
-    <button class="btn btn-indigo btn-rounded" id="clearBtn">Clear Articles <i class="fal fa-trash-alt"></i></button>
+    <button class="btn blue-gradient" id="scrapeBtn">Scrape Articles<i class="far fa-gem ml-1"></i></button>
+    <button class="btn btn-indigo" id="clearBtn">Clear Articles <i class="fal fa-trash-alt"></i></button>
   
   </div>
   <!-- Jumbotron -->
-        <div class="row mx-auto mt-3 ">
-          <!-- <div class="col-md-12" style="background-color: #99bbd3;">
-              <h1 class= "h1 m-3">Note Scraper</h1>
-          </div> -->
+        <div class="row mx-auto mt-1">
           <div class="col-md-6">
               <div id="articles"></div>
           </div>
-          <div class="col-md-6">
-              <div id="notes" class="row text-center mx-auto"></div>
+          <div class="col-md-6"><div class="col-md-12" id="commentz"><h3 class="h3 text-muted text-left mt-4">Comments:</h3></div>
+            <div id="noteComments" class="row text-center mx-auto"></div>
+
           </div>
         </div>
     </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Comment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div id="notes" class="row text-center mx-auto"></div>
 
- 
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Central Modal Warning Demo-->
+<div class="modal fade left" id="ModalWarning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading">ATTENTION</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+
+      
+      <div class="modal-body" id="warningModal">
+
+        <div class="row">
+          <div class="col-12 text-center">
+            <div style="height: 10px"></div>
+            <h2 class="title mb-0 h2">PLEASE FILL OUT ALL FORM INPUTS</h2>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-outline-warning waves-effect" data-dismiss="modal">TRY AGAIN</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!-- Central Modal Warning Demo-->
+
+
+
+
  <!-- SCRIPTS -->
 
     <!-- JQuery -->
-    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
 
     <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="/js/tether.min.js"></script>
+    <script type="text/javascript" src="./js/tether.min.js"></script>
 
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="/js/mdb.min.js"></script>
+    <script type="text/javascript" src="./js/mdb.min.js"></script>
 
-    <script type="text/javascript" src="/js/popper.min.js"></script>
+    <script type="text/javascript" src="./js/popper.min.js"></script>
 
     <!-- Custom Scripts -->
 
-    <script type="text/javascript" src="/js/all.min.js"></script>
+    <script type="text/javascript" src="./js/all.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
-       <script src="/app.js"></script>
+       <script src="./app.js"></script>
 
 
     <!-- Animations init-->
     <script>
         new WOW().init();
+        $("#commentz").hide()
+
     </script>
 
 

@@ -27,6 +27,11 @@ header,
 body{
     line-height: 1.2;
     margin: 0 auto!important;
+    font-family: 'oswald';
+
+}
+#noteComments:nth-child(odd){
+    background-color:red!important;
 
 }
 
