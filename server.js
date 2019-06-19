@@ -34,6 +34,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 
+
 var databaseUri = "mongodb://localhost/scrapeHwdb";
 if (process.env.MONGODB_URI){
   mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
