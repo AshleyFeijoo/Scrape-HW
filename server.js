@@ -11,7 +11,7 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 // Require all models
-var connect = require("./models");
+var db = require("./models");
 
 var PORT = 3000;
 
@@ -34,22 +34,26 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 
+var databaseUri = "mongodb://localhost/scrapeHwdb";
+if (process.env.MONGODB_URI){
+  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+}else{
+  mongoose.connect(databaseUri, { useNewUrlParser: true });
+
+}
+
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/scrapeHwDb", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/scrapeHwDb", { useNewUrlParser: true });
 
 // mongoose.connect("mongodb://heroku_gnzk5747:4d2121nhgnfbdl1pfirsdepk9n@ds125262.mlab.com:25262/heroku_gnzk5747", { useNewUrlParser: true });
 
-var connect = mongoose.connection;
+var con = mongoose.connection;
 
-// Show any mongoose errors
-connect.on("error", function(error) {
-  console.log("Mongoose Error: ", error);
+con.on('error', console.error.bind(console, 'connection error:'));
+con.once('open', function() {
+  console.log('Connected to Mongoose!')
 });
 
-// Once logged in to the db through mongoose, log a success message
-connect.once("open", function() {
-  console.log("Mongoose connection successful.");
-});
 
 var result = {};
 // Routes
@@ -119,18 +123,18 @@ app.get("/articles", function(req, res) {
 });
 
 
-app.get("/notes/:authorids", function(req, res){
-console.log(req.params.articleId);
-  db.Note.findOne({authorids: req.params.id})
-    .then(function(dbNote) {
-      // If we were able to successfully find Articles, send them back to the client
-      res.json(dbNote);
-    })
-    .catch(function(err) {
-      // If an error occurred, send it to the client
-      res.json(err);
-    });
-});
+// app.get("/notes/:authorids", function(req, res){
+// console.log(req.params.articleId);
+//   db.Note.findOne({authorids: req.params.id})
+//     .then(function(dbNote) {
+//       // If we were able to successfully find Articles, send them back to the client
+//       res.json(dbNote);
+//     })
+//     .catch(function(err) {
+//       // If an error occurred, send it to the client
+//       res.json(err);
+//     });
+// });
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
