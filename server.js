@@ -53,7 +53,7 @@ var result = {};
 
 app.get("/", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("https://www.clickhole.com/").done(function(response) {
+  axios.get("https://www.clickhole.com/").then(function(response) {
     var $ = cheerio.load(response.data);
     $("article").each(function(i, element) {
     
@@ -61,7 +61,7 @@ app.get("/", function(req, res) {
       var link = $(element).find("h1").parent("a").attr("href");
       var img = '';
       // console.log(link);
-      axios.get(link).done(function(response) {
+      axios.get(link).then(function(response) {
         console.log('response:' + response);
         var $ = cheerio.load(response.data);
 
@@ -75,7 +75,7 @@ app.get("/", function(req, res) {
           img: img
         };
         db.Article.create(result)
-        .done(function(dbArticle) {
+        .then(function(dbArticle) {
           // View the added result in the console
           console.log(dbArticle);
 

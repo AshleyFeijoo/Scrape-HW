@@ -6,13 +6,11 @@ $(document).ready(function () {
     url: "/"
   })
     // With that done, add the note information to the page
-    .then(function(data) {
-      console.log(data);
-    })
+    .then(function(data) {})
 
 $("#scrapeBtn").click(function (e) { 
   e.preventDefault();
-  $.getJSON("/", function(data) {
+  $.getJSON("/articles", function(data) {
     console.log(data);
     // For each one
     for (var i = 0; i < data.length; i++) {
