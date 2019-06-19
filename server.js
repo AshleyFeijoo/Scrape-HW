@@ -40,6 +40,10 @@ app.set("view engine", "handlebars");
 mongoose.connect("mongodb://heroku_2sqt21rx:6dgrp89eh23jv1isi8vhebronc@ds239797.mlab.com:39797/heroku_2sqt21rx", { useNewUrlParser: true })
 var result = {};
 // Routes
+app.get("/", function(req, res){
+  res.redirect('/scrape');
+
+})
 
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
@@ -88,8 +92,6 @@ app.get("/scrape", function(req, res) {
   // res.redirect('/');
       // res.send(result);
 });
-
-
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
