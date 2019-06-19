@@ -11,7 +11,7 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 
 // Require all models
-var db = require("./models");
+var connect = require("./models");
 
 var PORT = 3000;
 
@@ -35,8 +35,22 @@ app.set("view engine", "handlebars");
 
 
 // Connect to the Mongo DB
-
 mongoose.connect("mongodb://localhost/scrapeHwDb", { useNewUrlParser: true });
+
+// mongoose.connect("mongodb://heroku_gnzk5747:4d2121nhgnfbdl1pfirsdepk9n@ds125262.mlab.com:25262/heroku_gnzk5747", { useNewUrlParser: true });
+
+var connect = mongoose.connection;
+
+// Show any mongoose errors
+connect.on("error", function(error) {
+  console.log("Mongoose Error: ", error);
+});
+
+// Once logged in to the db through mongoose, log a success message
+connect.once("open", function() {
+  console.log("Mongoose connection successful.");
+});
+
 var result = {};
 // Routes
 
