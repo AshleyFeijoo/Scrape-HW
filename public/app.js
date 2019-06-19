@@ -1,7 +1,3 @@
-
-// Grab the articles as a json
-
-
 $(document).ready(function () {
   $("#commentz").hide();
 
@@ -13,7 +9,6 @@ $(document).ready(function () {
   });
 
 $("#scrapeBtn").click(function (e) { 
-
   e.preventDefault();
   $.getJSON("/articles", function(data) {
     console.log(data);

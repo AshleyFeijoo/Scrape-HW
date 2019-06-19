@@ -37,11 +37,15 @@ app.set("view engine", "handlebars");
 // Connect to the Mongo DB
 
 // mongoose.connect("mongodb://localhost/scrapeHwDb", { useNewUrlParser: true });
-mongoose.connect("mongodb://heroku_2sqt21rx:6dgrp89eh23jv1isi8vhebronc@ds239797.mlab.com:39797/heroku_2sqt21rx", { useNewUrlParser: true })
+// mongoose.connect("mongodb://heroku_2sqt21rx:6dgrp89eh23jv1isi8vhebronc@ds239797.mlab.com:39797/heroku_2sqt21rx", { useNewUrlParser: true })
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeHwDb";
+
+mongoose.connect(MONGODB_URI);
 var result = {};
 // Routes
-app.get("/", function(req, res){
-  res.redirect('/scrape');
+app.post("/", function(req, res){
+  res.send('/scrape');
 
 })
 
