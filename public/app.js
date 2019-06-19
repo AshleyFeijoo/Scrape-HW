@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 $("#scrapeBtn").click(function (e) { 
   e.preventDefault();
-  $.getJSON("/articles", function(data) {
+  $.getJSON("/", function(data) {
     console.log(data);
     // For each one
     for (var i = 0; i < data.length; i++) {

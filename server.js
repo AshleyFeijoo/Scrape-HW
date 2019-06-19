@@ -89,15 +89,15 @@ app.get("/scrape", function(req,res){
           // If an error occurred, log it
           console.log("error is " + err);
         });
-      // db.scrapedData.save( results );
-      res.send("yeet")
+      // db.scrapedData.save( result );
+      // res.send("yeet")
 
       });
 
     });
   
     // Send a message to the client
-    // res.redirect('/');
+    res.redirect('/articles');
     
   });
 })
