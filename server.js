@@ -53,6 +53,11 @@ var result = {};
 
 app.get("/", function(req, res) {
   // First, we grab the body of the html with axios
+ 
+      res.send(res);
+});
+
+app.get("/scrape", function(req,res){
   axios.get("https://www.clickhole.com/").done(function(response) {
     var $ = cheerio.load(response.data);
     $("article").each(function(i, element) {
@@ -95,9 +100,7 @@ app.get("/", function(req, res) {
     // res.redirect('/');
     
   });
- 
-      // res.send(result);
-});
+})
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
