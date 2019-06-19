@@ -90,7 +90,7 @@ app.get("/scrape", function(req,res){
           console.log("error is " + err);
         });
       // res.send("yeet")
-      res.redirect('/');
+      res.send("scrape completed")
 
       });
 
