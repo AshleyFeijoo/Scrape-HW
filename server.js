@@ -51,7 +51,7 @@ var result = {};
 
 // })
 
-app.get("/scrape", function(req, res) {
+app.get("/", function(req, res) {
   // First, we grab the body of the html with axios
   axios.get("https://www.clickhole.com/").done(function(response) {
     var $ = cheerio.load(response.data);
@@ -85,7 +85,7 @@ app.get("/scrape", function(req, res) {
           console.log("error is " + err);
         });
       // db.scrapedData.save( results );
-      res.send(dbArticle)
+      res.send("yeet")
 
       });
 
