@@ -51,7 +51,7 @@ var result = {};
 
 app.get("/", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("https://www.clickhole.com/").then(function(response) {
+  axios.get("https://www.clickhole.com/").done(function(response) {
     var $ = cheerio.load(response.data);
     $("article").each(function(i, element) {
     
@@ -59,7 +59,8 @@ app.get("/", function(req, res) {
       var link = $(element).find("h1").parent("a").attr("href");
       var img = '';
       // console.log(link);
-      axios.get(link).then(function(response) {
+      axios.get(link).done(function(response) {
+        console.log('response:' + response);
         var $ = cheerio.load(response.data);
 
         $("article").each(function(i, element) {
@@ -72,7 +73,7 @@ app.get("/", function(req, res) {
           img: img
         };
         db.Article.create(result)
-        .then(function(dbArticle) {
+        .done(function(dbArticle) {
           // View the added result in the console
           console.log(dbArticle);
 
@@ -82,16 +83,17 @@ app.get("/", function(req, res) {
           console.log("error is " + err);
         });
       // db.scrapedData.save( results );
+      res.send(dbArticle)
 
       });
 
     });
   
     // Send a message to the client
-    res.redirect('/');
+    // res.redirect('/');
     
   });
-  // res.redirect('/');
+ 
       // res.send(result);
 });
 // Route for getting all Articles from the db

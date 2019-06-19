@@ -1,6 +1,14 @@
 $(document).ready(function () {
   $("#commentz").hide();
 
+  $.ajax({
+    method: "GET",
+    url: "/"
+  })
+    // With that done, add the note information to the page
+    .then(function(data) {
+      console.log(data);
+    })
 
 $("#scrapeBtn").click(function (e) { 
   e.preventDefault();
@@ -34,7 +42,6 @@ $(document).on("click", "#listCommentBtn", function(e) {
   })
     // With that done, add the note information to the page
     .then(function(data) {
-      console.log(data);
       for (let i=0; i<data.length; i++){
         // if (data[i].note){
           console.log(data[i])
