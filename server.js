@@ -34,28 +34,9 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 
-const 
-var databaseUri = "mongodb://localhost/scrapeHwdb";
-if (process.env.MONGODB_URI){
-  mongoose.connect("mongodb://heroku_2sqt21rx:6dgrp89eh23jv1isi8vhebronc@ds239797.mlab.com:39797/heroku_2sqt21rx", { useNewUrlParser: true })
-}else{
-  mongoose.connect(databaseUri, { useNewUrlParser: true });
-
-}
-
 // Connect to the Mongo DB
-// mongoose.connect("mongodb://localhost/scrapeHwDb", { useNewUrlParser: true });
 
-// mongoose.connect("mongodb://heroku_gnzk5747:4d2121nhgnfbdl1pfirsdepk9n@ds125262.mlab.com:25262/heroku_gnzk5747", { useNewUrlParser: true });
-
-var con = mongoose.connection;
-
-con.on('error', console.error.bind(console, 'connection error:'));
-con.once('open', function() {
-  console.log('Connected to Mongoose!')
-});
-
-
+mongoose.connect("mongodb://heroku_2sqt21rx:6dgrp89eh23jv1isi8vhebronc@ds239797.mlab.com:39797/heroku_2sqt21rx", { useNewUrlParser: true });
 var result = {};
 // Routes
 
@@ -124,18 +105,18 @@ app.get("/articles", function(req, res) {
 });
 
 
-// app.get("/notes/:authorids", function(req, res){
-// console.log(req.params.articleId);
-//   db.Note.findOne({authorids: req.params.id})
-//     .then(function(dbNote) {
-//       // If we were able to successfully find Articles, send them back to the client
-//       res.json(dbNote);
-//     })
-//     .catch(function(err) {
-//       // If an error occurred, send it to the client
-//       res.json(err);
-//     });
-// });
+app.get("/notes/:authorids", function(req, res){
+console.log(req.params.articleId);
+  db.Note.findOne({authorids: req.params.id})
+    .then(function(dbNote) {
+      // If we were able to successfully find Articles, send them back to the client
+      res.json(dbNote);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
