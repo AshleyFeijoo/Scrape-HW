@@ -41,20 +41,18 @@ app.set("view engine", "handlebars");
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeHwDb";
 
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 var result = {};
 // Routes
-app.post("/", function(req, res){
-  res.send('/scrape');
+// app.post("/", function(req, res){
+//   res.send('/scrape');
 
-})
+// })
 
-app.get("/scrape", function(req, res) {
+app.get("/", function(req, res) {
   // First, we grab the body of the html with axios
   axios.get("https://www.clickhole.com/").then(function(response) {
     var $ = cheerio.load(response.data);
-
-    console.log($);
     $("article").each(function(i, element) {
     
       var title = $(element).find("h1").text();

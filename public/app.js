@@ -1,12 +1,6 @@
 $(document).ready(function () {
   $("#commentz").hide();
 
-  $.ajax({
-    method: "GET",
-    url: "/"
-  }).then(function(data){
-    console.log(data);
-  });
 
 $("#scrapeBtn").click(function (e) { 
   e.preventDefault();
