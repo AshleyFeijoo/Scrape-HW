@@ -53,11 +53,6 @@ var result = {};
 
 app.get("/", function(req, res) {
   // First, we grab the body of the html with axios
- 
-      res.send(res);
-});
-
-app.get("/scrape", function(req,res){
   axios.get("https://www.clickhole.com/").done(function(response) {
     var $ = cheerio.load(response.data);
     $("article").each(function(i, element) {
@@ -89,18 +84,20 @@ app.get("/scrape", function(req,res){
           // If an error occurred, log it
           console.log("error is " + err);
         });
-      // res.send("yeet")
-      res.send("scrape completed")
+      // db.scrapedData.save( results );
+      res.send('nsadklmsa')
 
       });
 
     });
   
     // Send a message to the client
-
+    // res.redirect('/');
     
   });
-})
+ 
+      // res.send(result);
+});
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   // Grab every document in the Articles collection
