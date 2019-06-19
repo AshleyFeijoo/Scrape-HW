@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Make public a static folder
 // app.use(express.static("./public"));
-app.use(express.static(__dirname + './public'));
+app.use(express.static(__dirname + '/public'));
 
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -36,9 +36,8 @@ app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB
 
-mongoose.connect("mongodb://heroku_2sqt21rx:6dgrp89eh23jv1isi8vhebronc@ds239797.mlab.com:39797/heroku_2sqt21rx", { useNewUrlParser: true });
-// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://heroku_2sqt21rx:6dgrp89eh23jv1isi8vhebronc@ds239797.mlab.com:39797/heroku_2sqt21rx";
-// mongoose.connect(MONGODB_URI,{ useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/scrapeHwDb", { useNewUrlParser: true });
+mongoose.connect("mongodb://heroku_2sqt21rx:6dgrp89eh23jv1isi8vhebronc@ds239797.mlab.com:39797/heroku_2sqt21rx", { useNewUrlParser: true })
 var result = {};
 // Routes
 
