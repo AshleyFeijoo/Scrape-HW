@@ -35,6 +35,7 @@ app.set("view engine", "handlebars");
 
 
 // Connect to the Mongo DB
+
 mongoose.connect("mongodb://localhost/scrapeHwDb", { useNewUrlParser: true });
 var result = {};
 // Routes
@@ -104,9 +105,9 @@ app.get("/articles", function(req, res) {
 });
 
 
-app.get("/notes/:id", function(req, res){
-console.log(req.params.articleId)
-  db.Note.find({ _id: req.params.id })
+app.get("/notes/:authorids", function(req, res){
+console.log(req.params.articleId);
+  db.Note.findOne({authorids: req.params.id})
     .then(function(dbNote) {
       // If we were able to successfully find Articles, send them back to the client
       res.json(dbNote);
@@ -115,7 +116,6 @@ console.log(req.params.articleId)
       // If an error occurred, send it to the client
       res.json(err);
     });
-
 });
 
 // Route for grabbing a specific Article by id, populate it with it's note
@@ -127,7 +127,7 @@ app.get("/articles/:id", function(req, res) {
     .then(function(dbArticle) {
       // db.Note.findOne(articleId: )
       // If we were able to successfully find an Article with the given id, send it back to the client
-      console.log(dbArticle.note._id);
+     
       res.json(dbArticle);
     })
     .catch(function(err) {
@@ -147,8 +147,8 @@ app.post("/articles/:id", function(req, res) {
       // db.Article.insertMany({ _id: req.params.id }, { note: dbNote._id }, { new: true });
       // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-      return db.Article.update({ _id: req.params.id }, { note: dbNote._id }, { new: true }, {multi: true});
-      console.log(dbNote)
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+      // console.log(dbNote)
     })
     .then(function(dbArticle) {
 
