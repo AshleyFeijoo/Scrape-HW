@@ -34,10 +34,10 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 
-
+const 
 var databaseUri = "mongodb://localhost/scrapeHwdb";
 if (process.env.MONGODB_URI){
-  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+  mongoose.connect("mongodb://heroku_2sqt21rx:6dgrp89eh23jv1isi8vhebronc@ds239797.mlab.com:39797/heroku_2sqt21rx", { useNewUrlParser: true })
 }else{
   mongoose.connect(databaseUri, { useNewUrlParser: true });
 
