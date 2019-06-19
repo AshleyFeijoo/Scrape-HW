@@ -39,7 +39,8 @@ app.set("view engine", "handlebars");
 // mongoose.connect("mongodb://localhost/scrapeHwDb", { useNewUrlParser: true });
 // mongoose.connect("mongodb://heroku_2sqt21rx:6dgrp89eh23jv1isi8vhebronc@ds239797.mlab.com:39797/heroku_2sqt21rx", { useNewUrlParser: true })
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeHwDb";
+var MONGODB_URI = process.env.MONGODB_URI;
+// || "mongodb://localhost/scrapeHwDb";
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 var result = {};
